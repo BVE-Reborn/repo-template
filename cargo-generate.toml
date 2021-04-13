@@ -2,5 +2,5 @@
 github_org = { type = "string", prompt = "Github username/organization?", default = "BVE-Reborn" }
 copyright = { type = "string", prompt = "Name on copyright? [used as: 'Copyright 2021 <answer>']", default = "the BVE-Reborn developers" }
 wasm = { type = "bool", prompt = "Support WASM?", default = true }
-msrv = { type = "string", prompt = "What Minimum Supported Rust Version (MSRV)? [X.YY or None]", regex = "(\\d+\\.\\d+)|None"}
+msrv = { type = "string", prompt = "What Minimum Supported Rust Version (MSRV)? [X.YY or None]", regex = "(\\d+\\.\\d+)|None", default = "None" }
 ci_timeout = { type = "string", prompt = "How long should CI wait before timing out?", default = "30" }

@@ -5,8 +5,7 @@
 [![Documentation](https://docs.rs/{{project-name}}/badge.svg)](https://docs.rs/{{project-name}})
 ![License](https://img.shields.io/crates/l/{{project-name}})
 
-{% raw %}
-{{readme}}
 
-License: {{license}}
-{% endraw %}
+
+
+License: MIT OR Apache-2.0 OR Zlib

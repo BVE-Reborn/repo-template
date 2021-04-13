@@ -38,7 +38,7 @@ min = 0  # allow first increment
 [[package.metadata.release.pre-release-replacements]]
 file = "CHANGELOG.md"
 search = "<!-- Begin Diffs -->"
-replace = "[Unreleased](https://github.com/{% endraw %}{{github_org}}/{{project-name}}/{% raw %}compare/v{{version}}...HEAD)"
+replace = "- [Unreleased](https://github.com/{% endraw %}{{github_org}}/{{project-name}}/{% raw %}compare/v{{version}}...HEAD)"
 min = 0  # allow non-first increment
 
 [profile.release]
