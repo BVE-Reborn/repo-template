@@ -75,6 +75,11 @@ jobs:
         with:
           command: test
         if: ${{ matrix.name != "wasm" }}
+          
+      - name: doc
+        run: |
+          RUSTDOCFLAGS="-D warnings" cargo doc --no-deps
+        shell: bash
 
   cargo-fmt:
     runs-on: ubuntu-latest
