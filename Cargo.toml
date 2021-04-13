@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "examples",
+    "{{project-name}}"
+]
+resolver = 2
+
+[profile.release]
+lto = "thin"

@@ -1,0 +1,5 @@
+[placeholders]
+wasm = { type = "bool", prompt = "Support WASM?", default = "true" }
+msrv = { type = "string", prompt = "What Minimum Supported Rust Version (MSRV)?", regex = "\\d+\\.\\d+"}
+ci_timeout = { type = "integer", prompt = "How long should CI wait before timing out?", default = "30" }
+
