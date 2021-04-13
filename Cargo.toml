@@ -43,4 +43,4 @@ min = 0  # allow non-first increment
 
 [profile.release]
 lto = "thin"
-{%- endraw -%}
+{% endraw %}
