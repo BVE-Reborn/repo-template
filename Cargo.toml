@@ -1,7 +1,7 @@
 [workspace]
 members = [
 ]
-resolver = "2"
+# resolver = "2"
 
 [package]
 name = "{{project-name}}"
@@ -35,6 +35,11 @@ file = "CHANGELOG.md"
 search = "\\[Unreleased\\]\\(https://github.com/{% endraw %}{{github_org}}/{{project-name}}/compare/v([a-z0-9.-]+)\\.\\.\\.HEAD\\)"
 replace = "[Unreleased](https://github.com/{{github_org}}/{{project-name}}/{% raw %}compare/v{{version}}...HEAD)\n- [v{{version}}](https://github.com/{% endraw %}{{github_org}}/{{project-name}}/{% raw %}compare/v$1...v{{version}})"
 min = 0  # allow first increment
+[[package.metadata.release.pre-release-replacements]]
+file = "CHANGELOG.md"
+search = "<!-- Begin Diffs -->"
+replace = "[Unreleased](https://github.com/{% endraw %}{{github_org}}/{{project-name}}/{% raw %}compare/v{{version}}...HEAD)"
+min = 0  # allow non-first increment
 
 [profile.release]
 lto = "thin"
