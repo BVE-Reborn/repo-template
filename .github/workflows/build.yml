@@ -10,14 +10,14 @@ jobs:
 
     strategy:
       matrix:
-        rust_version: [stable{%- if msrv != "None" -%}, "{{msrv}}"{% endif %}]
+        rust_version: [stable{% if msrv != "None" %}, "{{msrv}}"{% endif %}]
         include:
-          {%- if wasm -%}
+          {% if wasm %}
           # wasm
           - name: 'wasm'
             os: 'ubuntu-latest'
             target: 'wasm32-unknown-unknown'
-          {%- endif -%}
+          {% endif %}
 
           # native
           - name: 'native linux'
@@ -30,7 +30,7 @@ jobs:
             os: 'windows-latest'
             target: 'x86_64-pc-windows-msvc'
       fail-fast: false
-    {%- raw -%}
+    {% raw %}
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.name }}
 
@@ -108,4 +108,4 @@ jobs:
           log-level: warn
           command: check
           arguments: --all-features
-{%- endraw -%}
+{% endraw %}
