@@ -10,25 +10,53 @@ jobs:
 
     strategy:
       matrix:
-        rust_version: [stable{% if msrv != "None" %}, "{{msrv}}"{% endif %}]
+        rust_version: [stable, "{{msrv}}"]
         include:
           {% if wasm %}
-          # wasm
-          - name: 'wasm'
+          # wasm stable
+          - name: 'stable wasm'
             os: 'ubuntu-latest'
             target: 'wasm32-unknown-unknown'
+            rust_version: 'stable'
           {% endif %}
 
-          # native
-          - name: 'native linux'
+          # native stable
+          - name: 'stable linux'
             os: 'ubuntu-latest'
             target: 'x86_64-unknown-linux-gnu'
-          - name: 'native mac'
+            rust_version: 'stable'
+          - name: 'stable mac'
             os: 'macos-latest'
             target: 'x86_64-apple-darwin'
-          - name: 'native windows'
+            rust_version: 'stable'
+          - name: 'stable windows'
             os: 'windows-latest'
             target: 'x86_64-pc-windows-msvc'
+            rust_version: 'stable'
+
+          {% if msrv != "None" %}
+          {% if wasm %}
+          # wasm MSRV
+          - name: '{{msrv}} wasm'
+            os: 'ubuntu-latest'
+            target: 'wasm32-unknown-unknown'
+            rust_version: '{{msrv}}'
+          {% endif %}
+
+          # native MSRV
+          - name: '{{msrv}} linux'
+            os: 'ubuntu-latest'
+            target: 'x86_64-unknown-linux-gnu'
+            rust_version: '{{msrv}}'
+          - name: '{{msrv}} mac'
+            os: 'macos-latest'
+            target: 'x86_64-apple-darwin'
+            rust_version: '{{msrv}}'
+          - name: '{{msrv}} windows'
+            os: 'windows-latest'
+            target: 'x86_64-pc-windows-msvc'
+            rust_version: '{{msrv}}'
+          {% endif %}
       fail-fast: false
     {% raw %}
     runs-on: ${{ matrix.os }}
@@ -45,9 +73,9 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ matrix.os }}-${{ matrix.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ matrix.os }}-${{ matrix.target }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ matrix.os }}-${{ matrix.os }}-cargo-
+            ${{ matrix.os }}-${{ matrix.target }}-cargo-
 
       - name: install rust
         uses: actions-rs/toolchain@v1
@@ -62,7 +90,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: -D warnings --target ${{ matrix.target }}
+          args: --target ${{ matrix.target }} -- -D warnings 
           
       - name: build
         uses: actions-rs/cargo@v1
@@ -74,11 +102,11 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-        if: ${{ matrix.name != "wasm" }}
+        if: ${{ matrix.name != 'wasm' }}
           
       - name: doc
         run: |
-          RUSTDOCFLAGS="-D warnings" cargo doc --no-deps
+          RUSTDOCFLAGS="-D warnings" cargo doc --no-deps --target ${{ matrix.target }}
         shell: bash
 
   cargo-fmt:
